@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 2 한국어 듣기·말하기 스마트 단어장</title>
+  <!-- 빌드 없이 실시간 스타일 적용을 위한 Tailwind v4 CDN -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 min-h-screen py-10 px-4 flex flex-col items-center font-sans antialiased text-slate-800">
+
+  <!-- 상단 헤더 영역 -->
+  <header class="text-center mb-8 max-w-md w-full">
+    <span class="text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">🗣️ 교사 생생 음성 + AI 발음 평가</span>
+    <h1 class="text-3xl font-black text-slate-900 mt-3">오늘의 상황별 대화</h1>
+    <p class="text-slate-500 mt-1">선생님의 발음을 듣고, 빈칸에 맞는 거절 표현을 직접 말해 보세요.</p>
+  </header>
+
+  <main class="max-w-md w-full space-y-6">
+
+    <!-- 1. 스마트 오디오 플래시 카드 -->
+    <section class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transform transition duration-300 hover:scale-[1.02]">
+      <div class="bg-indigo-600 px-5 py-3 text-white text-xs font-semibold flex justify-between items-center">
+        <span>[단어 발음 훈련]</span>
+        <span class="bg-indigo-500/50 px-2 py-0.5 rounded text-[10px] border border-indigo-400">마우스를 올려 뒷면을 확인하세요</span>
+      </div>
+
+      <div class="p-8 text-center min-h-[220px] flex flex-col justify-center items-center group cursor-pointer">
+        <!-- [앞면] 한국어 단어 및 선생님 녹음 듣기 버튼 -->
+        <div class="group-hover:hidden transition-all duration-300 w-full flex flex-col items-center">
+          <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight flex items-center justify-center gap-2">
+            거절하다
+            <!-- 교사 녹음 파일 경로를 첫 번째 인자에 적어줍니다 -->
+            <button onclick="event.stopPropagation(); playTeacherAudio('audio/refusal_word.mp4')" class="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition" title="선생님 발음 듣기">
+              🔊
+            </button>
+          </h2>
+          <p class="text-xs text-slate-400 mt-4 font-medium">💡 버튼을 눌러 선생님의 생생한 발음을 들어보세요.</p>
+        </div>
+
+        <!-- [뒷면] 의미 및 음성 지원 예문 -->
+        <div class="hidden group-hover:block transition-all duration-300 w-full">
+          <span class="text-[11px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">의미 (Meaning)</span>
+          <p class="text-xl font-bold text-slate-800 mt-1">To refuse, decline</p>
+          
+          <!-- 예문 박스 -->
+          <div class="mt-4 pt-3 border-t border-slate-100 text-left text-sm bg-slate-50 p-3 rounded-2xl relative">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-bold text-indigo-600 text-xs">📝 예문 듣고 말하기</span>
+              <button onclick="event.stopPropagation(); playTeacherAudio('audio/example_sentence.mp4')" class="text-xs font-bold text-indigo-500 bg-white shadow-xs px-2 py-0.5 rounded-lg hover:bg-slate-100">
+                🔊 문장 듣기
+              </button>
+            </div>
+            <p class="font-medium text-slate-700 leading-relaxed mt-1">"친구의 주말 약속 제안을 정중하게 <span class="text-indigo-600 font-semibold">거절했어요</span>."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 화용 맥락 중심의 듣기/말하기 퀴즈 -->
+    <section class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6">
+      <div class="flex items-center space-x-2 text-amber-500 font-bold text-xs uppercase tracking-wider mb-3">
+        <span>🧩 💬 Listening & Speaking Quiz</span>
+      </div>
+
+      <h3 class="text-base font-bold text-slate-900 leading-snug mb-4">
+        Q. 다음 대화를 듣고, 빈칸에 들어갈 가장 자연스러운 거절의 답을 고르세요.
+      </h3>
+
+      <!-- 메신저 스타일 대화창 UI -->
+      <div class="bg-slate-50 rounded-2xl p-4 mb-5 border border-slate-100 space-y-3 text-sm">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start space-x-2">
+            <span class="font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded text-xs mt-0.5">가</span>
+            <p id="dialogue-a" class="text-slate-700">오늘 저녁에 시간 있으면 같이 떡볶이 먹으러 갈래요?</p>
+          </div>
+          <button onclick="playTeacherAudio('audio/dialogue_a.mp4')" class="text-xs bg-white border border-slate-200 px-1.5 py-0.5 rounded-md hover:bg-slate-100">🔊 듣기</button>
+        </div>
+        <div class="flex items-start justify-between pt-2 border-t border-slate-200/60">
+          <div class="flex items-start space-x-2">
+            <span class="font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded text-xs mt-0.5">나</span>
+            <p class="text-slate-700">
+              ( <span class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold text-xs mx-1">?</span> ), 다음 주에 같이 가요.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 보기 선택 및 발음 훈련 레이아웃 -->
+      <div class="space-y-2.5">
+        <div class="flex items-center gap-2">
+          <button onclick="checkAnswer(true, '미안하지만 오늘 좀 바빠서요', '한국어에서 제안을 정중하게 거절할 때는 대안이나 미안함을 먼저 표하고, 「-아서/어서」를 활용해 거절의 이유를 부드럽게 설명하는 것이 화용론적으로 가장 자연스럽습니다.')" 
+                  class="flex-1 text-left p-3.5 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/30 transition font-medium text-sm flex justify-between items-center group">
+            <span class="text-slate-700">① 미안하지만 오늘 좀 바빠서요</span>
+          </button>
+          <button onclick="playTeacherAudio('audio/quiz_option1.mp4')" class="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm">🔊</button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="checkAnswer(false, '무조건 안 돼요', '「무조건 안 돼요」는 상대방의 체면(face)을 상하게 할 수 있는 지나치게 직설적인 표현이므로 피하는 것이 좋습니다.')" 
+                  class="flex-1 text-left p-3.5 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/30 transition font-medium text-sm flex justify-between items-center group">
+            <span class="text-slate-700">② 무조건 안 돼요</span>
+          </button>
+          <button onclick="playTeacherAudio('audio/quiz_option2.mp4')" class="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm">🔊</button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="checkAnswer(false, '일이 있어서 가고 싶어요', '빈칸 뒤에 거절을 전제로 한 대안이 이어지므로, 가고 싶다는 소망의 표현은 문맥상 어색합니다.')" 
+                  class="flex-1 text-left p-3.5 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/30 transition font-medium text-sm flex justify-between items-center group">
+            <span class="text-slate-700">③ 일이 있어서 가고 싶어요</span>
+          </button>
+          <button onclick="playTeacherAudio('audio/quiz_option3.mp4')" class="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm">🔊</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- AI 실전 말하기 평가 팝업 모달 창 -->
+  <div id="quiz-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-slate-50 transform transition-all">
+      <div id="modal-icon" class="text-5xl mb-2"></div>
+      <h4 id="modal-title" class="text-2xl font-black mb-1"></h4>
+      <p id="modal-selected-text" class="text-indigo-600 font-bold text-lg mb-3 bg-indigo-50 py-1.5 rounded-xl"></p>
+      <p id="modal-desc" class="text-slate-600 text-xs leading-relaxed mb-5 font-medium"></p>
+      
+      <!-- 실시간 음성 인식 말하기 평가 세션 -->
+      <div class="border-t border-slate-100 pt-4 mb-4">
+        <p class="text-xs text-slate-400 mb-3 font-bold">둥근 버튼을 누르고 아래 문장을 마이크에 대고 읽으세요</p>
+        <button onclick="toggleListening()" id="mic-btn" class="mx-auto flex items-center justify-center w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 active:scale-95 transition shadow-sm border border-indigo-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 0 3-3V4.5a3 3 0 1 0-6 0v8.25a3 3 0 0 0 3 3Z" />
+          </svg>
+        </button>
+        <p id="mic-status" class="text-xs text-slate-500 mt-2.5">버튼을 누르면 음성 인식이 시작됩니다.</p>
+        <p id="speech-result" class="text-sm font-semibold text-slate-700 mt-2 bg-slate-50 py-1.5 rounded hidden"></p>
+      </div>
+
+      <button onclick="closeModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-2xl transition duration-200 shadow-md">
+        닫기
+      </button>
+    </div>
+  </div>
+
+  <footer class="mt-10 text-center text-[11px] text-slate-400 font-medium tracking-wide">
+    © 2026 Korean Learning EdTech Framework.
+  </footer>
+
+  <script>
+    let recognition;
+    let isListening = false;
+    let targetTextClean = "";
+    let currentAudio = null; // 현재 재생 중인 오디오 객체를 추적
+
+    const micSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 0 3-3V4.5a3 3 0 1 0-6 0v8.25a3 3 0 0 0 3 3Z" /></svg>`;
+    const checkSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>`;
+    const refreshSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>`;
+
+    function playTeacherAudio(audioPath) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      currentAudio = new Audio(audioPath);
+      currentAudio.play().catch(error => {
+        console.error("오디오 파일 로드 실패:", error);
+        alert("해당 경로에 녹음 파일(" + audioPath + ")이 존재하지 않거나 브라우저에서 차단되었습니다. 파일을 확인해 주세요!");
+      });
+    }
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = 'ko-KR';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        isListening = true;
+        const micBtn = document.getElementById('mic-btn');
+        micBtn.className = "mx-auto flex items-center justify-center w-14 h-14 rounded-full bg-rose-500 text-white animate-pulse transition";
+        document.getElementById('mic-status').innerText = "🔴 듣고 있습니다... 문장을 크게 읽어주세요.";
+        document.getElementById('speech-result').classList.add('hidden');
+      };
+
+      recognition.onresult = (event) => {
+        const userSpeech = event.results[0][0].transcript;
+        const resultArea = document.getElementById('speech-result');
+        resultArea.innerText = `인식된 발음: "${userSpeech}"`;
+        resultArea.classList.remove('hidden');
+
+        const userSpeechClean = userSpeech.replace(/[^가-힣a-zA-Z0-9]/g, "");
+        const micBtn = document.getElementById('mic-btn');
+        const micStatus = document.getElementById('mic-status');
+
+        if (userSpeechClean === targetTextClean) {
+          micBtn.className = "mx-auto flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 text-white transition";
+          micBtn.innerHTML = checkSvg;
+          micStatus.innerHTML = "<span class='text-emerald-600 font-bold'>🎉 발음이 정확합니다! 일치해요!</span>";
+        } else {
+          micBtn.className = "mx-auto flex items-center justify-center w-14 h-14 rounded-full bg-amber-500 text-white transition";
+          micBtn.innerHTML = refreshSvg;
+          micStatus.innerHTML = "<span class='text-amber-600 font-bold'>다시 한 번 부드럽게 소리 내어 읽어볼까요?</span>";
+        }
+      };
+
+      recognition.onerror = () => {
+        resetMicUI();
+        document.getElementById('mic-status').innerText = "❌ 음성을 인식하지 못했습니다. 버튼을 다시 누르고 시도해 주세요.";
+      };
+
+      recognition.onend = () => { isListening = false; };
+    }
+
+    function toggleListening() {
+      if (!recognition) {
+        alert("이 브라우저는 음성 인식 기능을 지원하지 않습니다. 크롬(Chrome) 환경을 권장합니다.");
+        return;
+      }
+      if (isListening) { recognition.stop(); } else { recognition.start(); }
+    }
+
+    function resetMicUI() {
+      const micBtn = document.getElementById('mic-btn');
+      micBtn.className = "mx-auto flex items-center justify-center w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 active:scale-95 transition shadow-sm border border-indigo-200";
+      micBtn.innerHTML = micSvg;
+      document.getElementById('mic-status').innerText = "버튼을 누르면 음성 인식이 시작됩니다.";
+      document.getElementById('speech-result').classList.add('hidden');
+    }
+
+    function checkAnswer(isCorrect, selectedText, explanation) {
+      const modal = document.getElementById('quiz-modal');
+      const icon = document.getElementById('modal-icon');
+      const title = document.getElementById('modal-title');
+      const textLabel = document.getElementById('modal-selected-text');
+      const desc = document.getElementById('modal-desc');
+
+      resetMicUI();
+      targetTextClean = selectedText.replace(/[^가-힣a-zA-Z0-9]/g, "");
+
+      if (isCorrect) {
+        icon.innerText = '🎉';
+        title.innerText = '정답입니다!';
+        title.className = 'text-xl font-black text-emerald-600 mb-1';
+      } else {
+        icon.innerText = '💡';
+        title.innerText = '화용 코칭 피드백';
+        title.className = 'text-xl font-black text-rose-500 mb-1';
+      }
+
+      textLabel.innerText = selectedText;
+      desc.innerText = explanation;
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      if (recognition && isListening) recognition.stop();
+      if (currentAudio) { currentAudio.pause(); }
+      document.getElementById('quiz-modal').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
